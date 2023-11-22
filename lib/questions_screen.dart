@@ -14,6 +14,8 @@ class QuestionsScreen extends StatefulWidget {
   final void Function(String answer) onSelectAnswer;
   // 監視する関数の名前を決める
   // swwiftUIの@ Stateと同じかんじ
+
+// これまとめて変数だよ
   @override
   State<QuestionsScreen> createState() {
     return _QuestionsScreenState();
