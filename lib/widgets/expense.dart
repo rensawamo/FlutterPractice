@@ -71,10 +71,10 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    // 大体　ここで　child　の 部品を定義
     Widget mainContent = const Center(
       child: Text('No expenses found. Start adding some!'),
     );
-
     if (_registeredExpenses.isNotEmpty) {
       mainContent = ExpensesList(
         expenses: _registeredExpenses,
@@ -82,6 +82,7 @@ class _ExpensesState extends State<Expenses> {
       );
     }
 
+    // その後、Scaffold　の child　に入れてしまうって流れが王道だな
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flutter ExpenseTracker'),
