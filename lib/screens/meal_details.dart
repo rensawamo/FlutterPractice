@@ -1,25 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:udemyappfirst/models/meal.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MealDetailsScreen extends StatelessWidget {
+import 'package:udemyappfirst/models/meal.dart';
+import 'package:udemyappfirst/providers/favorites_provider.dart';
+
+class MealDetailsScreen extends ConsumerWidget {
   const MealDetailsScreen({
     super.key,
     required this.meal,
-    required this.onToggleFavorite,
   });
 
   final Meal meal;
-  final void Function(Meal meal) onToggleFavorite;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // viewModel 的な感じか
+    // ここで 上の　ref に何を監視するか教えてる
+    // watchは下に続いていく
+    final favoriteMeals = ref.watch(favoriteMealsProvider);
+    // 監視後  isFavorite　まで監視がいく
+    final isFavorite = favoriteMeals.contains(meal);
+    // final isFavorite = false;
+
     return Scaffold(
+
+// bottomn alert　をなんかあ　AppBar で　かくのなんか違和感あるな
         appBar: AppBar(title: Text(meal.title), actions: [
           IconButton(
             onPressed: () {
-              onToggleFavorite(meal);
+              final wasAdded = ref
+                  //  .read は　一度だけ受け取る だから、onpressedの後の通知を監視する的な定石かな
+                  .read(favoriteMealsProvider.notifier)
+                  .toggleMealFavoriteStatus(meal);
+
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                      wasAdded ? 'Meal added as a favorite.' : 'Meal removed.'),
+                ),
+              );
             },
-            icon: const Icon(Icons.star),
+            icon: Icon(isFavorite ? Icons.star : Icons.apple),
           )
         ]),
         body: SingleChildScrollView(

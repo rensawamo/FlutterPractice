@@ -7,22 +7,18 @@ import 'package:udemyappfirst/widgets/meal_item.dart';
 class MealsScreen extends StatelessWidget {
   const MealsScreen({
     super.key,
-    // nil の可能性があるやつは requriedを必ずしもつけなくていい
     this.title,
     required this.meals,
-    required this.onToggleFavorite,
   });
 
   final String? title;
   final List<Meal> meals;
-  final void Function(Meal meal) onToggleFavorite;
 
   void selectMeal(BuildContext context, Meal meal) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MealDetailsScreen(
           meal: meal,
-          onToggleFavorite: onToggleFavorite,
         ),
       ),
     );
@@ -30,7 +26,6 @@ class MealsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 一度、 Nothingの　widgetを作っておいて
     Widget content = Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -52,7 +47,6 @@ class MealsScreen extends StatelessWidget {
       ),
     );
 
-// ここで上書き  = wigedは　上書きできる変数である
     if (meals.isNotEmpty) {
       content = ListView.builder(
         itemCount: meals.length,
@@ -65,9 +59,12 @@ class MealsScreen extends StatelessWidget {
       );
     }
 
+    if (title == null) {
+      return content;
+    }
+
     return Scaffold(
       appBar: AppBar(
-        //
         title: Text(title!),
       ),
       body: content,
