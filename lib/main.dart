@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-// import 'package:flutter_internals/ui_updates_demo.dart';
-import 'package:udemyappfirst/keys/keys.dart';
+import 'package:udemyappfirst/screens/tabs.dart';
+
+final theme = ThemeData(
+  useMaterial3: true,
+  colorScheme: ColorScheme.fromSeed(
+    brightness: Brightness.dark,
+    seedColor: const Color.fromARGB(255, 131, 57, 0),
+  ),
+  textTheme: GoogleFonts.latoTextTheme(),
+);
 
 void main() {
-  var numbers = [1, 2, 3];
-  // numbers = [4, 5, 6];
-  numbers.add(4);
-
   runApp(const App());
 }
 
@@ -17,13 +22,9 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(useMaterial3: true),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Internals'),
-        ),
-        body: const Keys(),
-      ),
+      //ダークモードとかここで指定可能　っぽいな
+      theme: theme,
+      home: const TabsScreen(),
     );
   }
 }
