@@ -26,6 +26,7 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedPageIndex = 0;
   final List<Meal> _favoriteMeals = [];
+  //Map型が　SwiftでいうDictionary
   Map<Filter, bool> _selectedFilters = kInitialFilters;
 
 // このページでdammyのdataを定義しているから、  ボトムアラームを　読んだ構造体ので使ってもらってここの 変数にも影響を与えてもらう
