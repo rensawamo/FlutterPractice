@@ -67,6 +67,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
       animation: _animationController,
       child: GridView(
         padding: const EdgeInsets.all(24),
+        // grid　の調節
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 3 / 2,
