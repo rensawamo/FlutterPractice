@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:udemyappfirst/widgets/grocery_list.dart';
 
 
-//
+// issuueを意識
 void main() {
   runApp(const MyApp());
 }
