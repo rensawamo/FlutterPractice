@@ -94,7 +94,8 @@ class _CategoriesScreenState extends State<CategoriesScreen>
         ).animate(
           CurvedAnimation(
             parent: _animationController,
-            //アニメーションの種類を指定
+            //アニメーションの種類を指定。
+            // crearte feature
             curve: Curves.easeInOut,
           ),
         ),
