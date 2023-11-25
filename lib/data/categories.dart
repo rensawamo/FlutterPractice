@@ -41,6 +41,7 @@ const categories = {
   ),
   Categories.other: Category(
     'Other',
+    //
     Color.fromARGB(255, 0, 225, 255),
   ),
 };
