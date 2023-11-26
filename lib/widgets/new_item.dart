@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:udemyappfirst/data/categories.dart';
 import 'package:udemyappfirst/models/category.dart';
@@ -18,18 +21,39 @@ class _NewItemState extends State<NewItem> {
   var _enteredName = '';
   var _enteredQuantity = 1;
   var _selectedCategory = categories[Categories.vegetables]!;
+  var _isSending = false;
 
-  void _saveItem() {
-    // if (_formKey.currentState!.validate()) { は込み込み
-    //  keyで監視されている TextFormFieldの値が nulではないかを見る
-// nulにするやつを下に組み込んでおく
+  void _saveItem() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      setState(() {
+        _isSending = true;
+      });
+      final url = Uri.https(
+          'flutter-prep-default-rtdb.firebaseio.com', 'shopping-list.json');
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(
+          {
+            'name': _enteredName,
+            'quantity': _enteredQuantity,
+            'category': _selectedCategory.title,
+          },
+        ),
+      );
 
-      // .popでnavigation 進む　ではなく　　"戻る"
+      final Map<String, dynamic> resData = json.decode(response.body);
+
+      if (!context.mounted) {
+        return;
+      }
+
       Navigator.of(context).pop(
         GroceryItem(
-          id: DateTime.now().toString(),
+          id: resData['name'],
           name: _enteredName,
           quantity: _enteredQuantity,
           category: _selectedCategory,
@@ -46,9 +70,7 @@ class _NewItemState extends State<NewItem> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),
-        // htmlのform 的な感じか
         child: Form(
-          //  textFiedを監視する Columにkeyでラベリングしてしまう
           key: _formKey,
           child: Column(
             children: [
@@ -57,8 +79,6 @@ class _NewItemState extends State<NewItem> {
                 decoration: const InputDecoration(
                   label: Text('Name'),
                 ),
-                // 入力された値が 不正なのではないか などを調べる
-                // 上は上でsave関数でこっちは エラー処理の準備をしておく
                 validator: (value) {
                   if (value == null ||
                       value.isEmpty ||
@@ -68,9 +88,6 @@ class _NewItemState extends State<NewItem> {
                   }
                   return null;
                 },
-                // ここで変数を変更
-                // setState(() { の役割も担っているのか  → もう入っているから描写が必要じゃないからここで　変数を変更する
-                //  だから、上書き
                 onSaved: (value) {
                   // if (value == null) {
                   //   return;
@@ -123,7 +140,6 @@ class _NewItemState extends State<NewItem> {
                             ),
                           ),
                       ],
-                      // アコディオンのこのonChange は便利そうだな
                       onChanged: (value) {
                         setState(() {
                           _selectedCategory = value!;
@@ -138,14 +154,22 @@ class _NewItemState extends State<NewItem> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () {
-                      _formKey.currentState!.reset();
-                    },
+                    onPressed: _isSending
+                        ? null
+                        : () {
+                            _formKey.currentState!.reset();
+                          },
                     child: const Text('Reset'),
                   ),
                   ElevatedButton(
-                    onPressed: _saveItem,
-                    child: const Text('Add Item'),
+                    onPressed: _isSending ? null : _saveItem,
+                    child: _isSending
+                        ? const SizedBox(
+                            height: 16,
+                            width: 16,
+                            child: CircularProgressIndicator(),
+                          )
+                        : const Text('Add Item'),
                   )
                 ],
               ),
