@@ -95,11 +95,9 @@ class _LocationInputState extends State<LocationInput> {
         builder: (ctx) => const MapScreen(),
       ),
     );
-
     if (pickedLocation == null) {
       return;
     }
-
     _savePlace(pickedLocation.latitude, pickedLocation.longitude);
   }
 

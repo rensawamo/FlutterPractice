@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+// ここらへんは ios ファイルの infoの設定をいじっていかないと 実機にインストールした時に落ちる
 class ImageInput extends StatefulWidget {
   const ImageInput({super.key, required this.onPickImage});
 
