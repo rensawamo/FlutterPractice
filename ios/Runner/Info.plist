@@ -4,12 +4,6 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-<string>フォトライブラリを利用する理由を記載</string>
-<key>NSCameraUsageDescription</key>
-<string>カメラを利用する理由を記載</string>
-<key>NSMicrophoneUsageDescription</key>
-<string>マイクを利用する理由を記載</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -21,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>udemyappfirst</string>
+	<string>com.example.udemyappfirst</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -30,8 +24,16 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<string>NO</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>カメラを利用する理由を記載</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>マイクを利用する理由を記載</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>フォトライブラリを利用する理由を記載</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
